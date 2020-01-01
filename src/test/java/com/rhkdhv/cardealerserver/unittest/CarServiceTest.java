@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,8 +53,8 @@ public class CarServiceTest {
 		List<Car> carList = Arrays.asList(ford, citroen);
 		double distanceToTravelInOneMOnth = 200;
 		double fuelPrice = 0.50;
-		BigDecimal expectedTotalAnnualCostForFord = new BigDecimal(5000);
-		BigDecimal expectedTotalAnnualCostForCitroen = new BigDecimal(4000);
+		BigDecimal expectedTotalAnnualCostForFord = BigDecimal.valueOf(5000).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal expectedTotalAnnualCostForCitroen = BigDecimal.valueOf(4000).setScale(2, RoundingMode.HALF_UP);
 		final List<Car> sortedLst = carService.sortCarAccordingToTotalAnnualCost(fuelPrice, distanceToTravelInOneMOnth, carList);
 		assertEquals(citroen.getMake(), sortedLst.get(0).getMake());
 		assertEquals(expectedTotalAnnualCostForCitroen, sortedLst.get(0).getTotalAnnualCost());
