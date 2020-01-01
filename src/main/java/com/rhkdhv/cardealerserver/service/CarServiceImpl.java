@@ -1,6 +1,7 @@
 package com.rhkdhv.cardealerserver.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,9 +33,10 @@ public class CarServiceImpl implements CarService {
 		carsInStock.stream().forEach(c -> {
 			final double priceOfFuelInOneMonth = constantMultuplyingFactor/c.getMileage();
 			final double annualFuelPrice = 12 * priceOfFuelInOneMonth;
-			final BigDecimal annualFuelPriceAndAnnualMaintenanceCost = new BigDecimal(annualFuelPrice).add(c.getAnnualMaintenanceCost());
-			final BigDecimal priceOfCarAnnually = c.getPrice().divide(new BigDecimal(4));
-			final BigDecimal totalAnnualCost = annualFuelPriceAndAnnualMaintenanceCost.add(priceOfCarAnnually);
+			final BigDecimal annualFuelPriceAndAnnualMaintenanceCost = BigDecimal.valueOf(annualFuelPrice).add(c.getAnnualMaintenanceCost());
+			final BigDecimal priceOfCarAnnually = c.getPrice().divide(BigDecimal.valueOf(4));
+			BigDecimal totalAnnualCost = annualFuelPriceAndAnnualMaintenanceCost.add(priceOfCarAnnually);
+			totalAnnualCost = totalAnnualCost.setScale(2, RoundingMode.HALF_UP);
 			c.setTotalAnnualCost(totalAnnualCost);
 		});
 		Collections.sort(carsInStock);
