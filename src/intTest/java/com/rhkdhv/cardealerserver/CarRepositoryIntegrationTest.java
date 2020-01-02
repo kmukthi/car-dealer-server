@@ -124,10 +124,5 @@ public class CarRepositoryIntegrationTest {
 		carRepository.deleteByMake(FORD_MAKE_FOR_TESTIN);
 		carRepository.deleteByMake(TOYOTA_MAKE_FOR_TESTIN);
 	}
-	
-	private static int generateRandomNumber(int min, int max) {
-		Random random = new Random();
-		return random.ints(min, max).findAny().getAsInt();
-	}
 
 }
